@@ -1,0 +1,22 @@
+//
+//  LXFilterPreHeader.pch
+//  LXFilterChoiceTool
+//
+//  Created by 天边的星星 on 2019/11/11.
+//  Copyright © 2019 starxin. All rights reserved.
+//
+
+#ifndef LXFilterPreHeader_pch
+#define LXFilterPreHeader_pch
+
+#ifdef __OBJC__
+    #define kLXHexColor(c)     ([UIColor colorWithRed:((c>>16)&0xFF)/255.f green:((c>>8)&0xFF)/255.f blue:(c&0xFF)/255.f alpha:1.0f])
+    #define kLXSystemFont(f)   ([UIFont systemFontOfSize:f])
+    #define kLXMidBoldSystemFont(f)  ([UIFont systemFontOfSize:f weight:UIFontWeightMedium])
+    #define kLXImageNamed(img) ([UIImage imageNamed:img])
+
+#else
+
+#endif
+
+#endif /* LXFilterPreHeader_pch */
