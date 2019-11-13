@@ -15,9 +15,14 @@ static CGFloat kLXSingleTableCellHeight = 50.0f;
 @interface LXFilterSingleTableView ()<UITableViewDelegate,UITableViewDataSource> {
     
 @private
+    ///数据源
     NSArray<LXFilterChoice*>* _choices;
-    LXFilterChoice* _choosedChoice;
-    NSIndexPath* _choosedIndexPath;
+    ///上一次确认的选项数组
+    NSMutableArray<LXFilterChoice*>* _choosedChoices;
+    ///上一个确认的选项索引素组
+    NSMutableArray<NSIndexPath*>* _choosedIndexPathArr;
+    ///判断是否是多选
+    BOOL _allowMoreChoice;
 }
 
 @end
@@ -31,6 +36,12 @@ static CGFloat kLXSingleTableCellHeight = 50.0f;
         self.dataSource = self;
         
         _choices = choices;
+        if (choices && choices.count) {
+            _allowMoreChoice = choices.firstObject.isAllowMoreChoice;
+        }
+        _choosedChoices = [NSMutableArray array];
+        _choosedIndexPathArr = [NSMutableArray array];
+        
         self.rowHeight = kLXSingleTableCellHeight;
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.backgroundColor = UIColor.whiteColor;
@@ -51,6 +62,82 @@ static CGFloat kLXSingleTableCellHeight = 50.0f;
     LXFilterChoice* choice = _choices[indexPath.row];
     cell.choice = choice;
 }
+///校正选中的选项数组和索引
+- (void)p_actionForCorrectChoosedChoicesInChoice:(LXFilterChoice*)choice indexPath:(NSIndexPath*)indexPath {
+    BOOL exist = NO;
+    for (NSUInteger i=0; i<_choosedChoices.count; i++) {
+        LXFilterChoice* obj = _choosedChoices[i];
+        if ([obj.choiceId isEqualToString:choice.choiceId]) {
+            exist = YES;
+            if (!choice.isSelected) {
+                [_choosedChoices removeObjectAtIndex:i];
+                [_choosedIndexPathArr removeObjectAtIndex:i];
+            }
+            break;
+        }
+    }
+    if (!exist) {//不存在
+        [_choosedChoices addObject:choice];
+        [_choosedIndexPathArr addObject:indexPath];
+    }
+}
+///处理多选类型的选中选项
+- (BOOL)p_actionForDealWithMoreChoiceSelectRow:(NSIndexPath *)indexPath choice:(LXFilterChoice*)choice {
+    
+    BOOL valid = YES;
+    if (choice.atLeastOneChoice) {//至少有一个值
+        if (_choosedChoices            &&
+            _choosedChoices.count == 1 &&
+            [choice.choiceId isEqualToString:_choosedChoices.firstObject.choiceId]) {//已选项只有一个值且是同一个选项
+            choice.selected = YES;
+            valid = NO;
+        }else {
+            choice.selected = !choice.isSelected;
+        }
+    }else {//可有可无
+        choice.selected = !choice.isSelected;
+    }
+    //从已选的选项中排除
+    [self p_actionForCorrectChoosedChoicesInChoice:choice indexPath:indexPath];
+    return valid;
+}
+///处理单选类型的选中选择
+- (BOOL)p_actionForDealWithSingleChoiceSelectRow:(NSIndexPath *)indexPath choice:(LXFilterChoice *)choice {
+    
+    BOOL valid = YES;
+    if (choice.atLeastOneChoice) {//必须且只能选中一个选项
+        if (choice.isSelected) {
+            valid = NO;
+        }else {//需要重置其他选项的选中状态
+            if (_choosedChoices && _choosedChoices.count==1) {
+                _choosedChoices.firstObject.selected = NO;
+                LXSingleChoiceCell* choosedCell = [self cellForRowAtIndexPath:_choosedIndexPathArr.firstObject];
+                choosedCell.choice = _choosedChoices.firstObject;
+                [_choosedChoices removeAllObjects];
+                [_choosedIndexPathArr removeAllObjects];
+            }
+            choice.selected = YES;
+            [_choosedChoices addObject:choice];
+            [_choosedIndexPathArr addObject:indexPath.copy];
+        }
+    }else {//可以不选中任何选项
+        choice.selected = !choice.isSelected;
+        //需要重置其他选项的选中状态
+        if (_choosedChoices.count==1 && [_choosedChoices.firstObject.choiceId isEqualToString:choice.choiceId]) {//点击的和上一次一样的选项
+            [_choosedChoices removeAllObjects];
+            [_choosedIndexPathArr removeAllObjects];
+        }else {//不一样
+            if (_choosedChoices.count==1) {
+                _choosedChoices.firstObject.selected = NO;
+                LXSingleChoiceCell* choosedCell = [self cellForRowAtIndexPath:_choosedIndexPathArr.firstObject];
+                choosedCell.choice = _choosedChoices.firstObject;
+            }
+            [_choosedChoices setArray:@[choice]];
+            [_choosedIndexPathArr setArray:@[indexPath.copy]];
+        }
+    }
+    return valid;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -59,40 +146,15 @@ static CGFloat kLXSingleTableCellHeight = 50.0f;
     LXFilterChoice* choice = _choices[indexPath.row];
     
     BOOL valid = YES;
-    if (choice.atLeastOneChoice) {//必须且只能选中一个选项
-        if (choice.isSelected) {
-            valid = NO;
-        }else {//需要重置其他选项的选中状态
-            if (_choosedChoice) {
-                _choosedChoice.selected = NO;
-                LXSingleChoiceCell* choosedCell = [tableView cellForRowAtIndexPath:_choosedIndexPath];
-                choosedCell.choice = _choosedChoice;
-            }
-        }
-        choice.selected = YES;
-        _choosedChoice = choice;
-        _choosedIndexPath = indexPath.copy;
-    }else {//可以不选中任何选项
-        choice.selected = !choice.isSelected;
-        //需要重置其他选项的选中状态
-        if (_choosedChoice && [_choosedChoice.choiceId isEqualToString:choice.choiceId]) {//点击的和上一次一样的选项
-            _choosedChoice = nil;
-            _choosedIndexPath = nil;
-        }else {//不一样
-            if (_choosedChoice) {
-                _choosedChoice.selected = NO;
-                LXSingleChoiceCell* choosedCell = [tableView cellForRowAtIndexPath:_choosedIndexPath];
-                choosedCell.choice = _choosedChoice;
-            }
-            _choosedChoice = choice;
-            _choosedIndexPath = indexPath.copy;
-        }
+    if (_allowMoreChoice) {//支持多选
+        valid = [self p_actionForDealWithMoreChoiceSelectRow:indexPath choice:choice];
+    }else {//单选
+        valid = [self p_actionForDealWithSingleChoiceSelectRow:indexPath choice:choice];
     }
-
     cell.choice = choice;
-    
-    if (self.selectedChoiceBlock) {
-        self.selectedChoiceBlock(_choosedChoice, valid);
+
+    if (self.selectedChoicesBlock) {
+        self.selectedChoicesBlock(_choosedChoices, valid);
     }
 }
 #ifdef DEBUG

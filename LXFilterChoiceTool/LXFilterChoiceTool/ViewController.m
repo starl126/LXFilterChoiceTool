@@ -32,15 +32,18 @@
     
     LXFilterSingleTableView* tableView = [[LXFilterSingleTableView alloc] initWithFrame:self.view.bounds choices:arrM.copy];
     [self.view addSubview:tableView];
-    tableView.selectedChoiceBlock = ^(LXFilterChoice * _Nullable choice, BOOL valid) {
-        NSLog(@"%@---%d", choice, valid);
+    tableView.selectedChoicesBlock = ^(NSArray<LXFilterChoice *> * _Nullable choicesArr, BOOL valid) {
+        for (LXFilterChoice* one in choicesArr) {
+            NSLog(@"%@---%d", one, valid);
+        }
     };
 }
 - (LXFilterChoice *)p_setSingleChoiceWithContent:(NSString*)content choiceId:(NSString*)choiceId {
     LXFilterChoice* choice = [LXFilterChoice new];
     choice.content = content.copy;
     choice.choiceId = choiceId.copy;
-    choice.mustHaveChoice = YES;
+    choice.mustHaveChoice = NO;
+    choice.allowMoreChoice = YES;
     return choice;
 }
 
