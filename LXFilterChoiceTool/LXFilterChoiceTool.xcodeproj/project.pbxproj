@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B1260B9237BDFBC00386D84 /* LXLevelChoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1260B8237BDFBC00386D84 /* LXLevelChoiceCell.m */; };
 		4B27812A2373BE0B009055CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2781292373BE0B009055CA /* AppDelegate.m */; };
-		4B27812D2373BE0B009055CA /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B27812C2373BE0B009055CA /* SceneDelegate.m */; };
 		4B2781302373BE0B009055CA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B27812F2373BE0B009055CA /* ViewController.m */; };
 		4B2781332373BE0B009055CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2781312373BE0B009055CA /* Main.storyboard */; };
 		4B2781352373BE0D009055CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2781342373BE0D009055CA /* Assets.xcassets */; };
@@ -43,11 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B1260B7237BDFBC00386D84 /* LXLevelChoiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXLevelChoiceCell.h; sourceTree = "<group>"; };
+		4B1260B8237BDFBC00386D84 /* LXLevelChoiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXLevelChoiceCell.m; sourceTree = "<group>"; };
 		4B2781252373BE0B009055CA /* LXFilterChoiceTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LXFilterChoiceTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2781282373BE0B009055CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4B2781292373BE0B009055CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4B27812B2373BE0B009055CA /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		4B27812C2373BE0B009055CA /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		4B27812E2373BE0B009055CA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4B27812F2373BE0B009055CA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4B2781322373BE0B009055CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -130,8 +130,6 @@
 				4BDC1723237540C9001C5767 /* private */,
 				4B2781282373BE0B009055CA /* AppDelegate.h */,
 				4B2781292373BE0B009055CA /* AppDelegate.m */,
-				4B27812B2373BE0B009055CA /* SceneDelegate.h */,
-				4B27812C2373BE0B009055CA /* SceneDelegate.m */,
 				4BF8DEBF237A625A00922A01 /* RootViewController.h */,
 				4BF8DEC0237A625A00922A01 /* RootViewController.m */,
 				4B27812E2373BE0B009055CA /* ViewController.h */,
@@ -186,6 +184,8 @@
 				4BDC172B23756AF5001C5767 /* LXFilterLevelTableView.m */,
 				4B3CC1262379885100095251 /* LXSingleChoiceCell.h */,
 				4B3CC1272379885100095251 /* LXSingleChoiceCell.m */,
+				4B1260B7237BDFBC00386D84 /* LXLevelChoiceCell.h */,
+				4B1260B8237BDFBC00386D84 /* LXLevelChoiceCell.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -329,7 +329,7 @@
 				4B27813B2373BE0D009055CA /* main.m in Sources */,
 				4BF8DEC1237A625A00922A01 /* RootViewController.m in Sources */,
 				4B3CC1282379885100095251 /* LXSingleChoiceCell.m in Sources */,
-				4B27812D2373BE0B009055CA /* SceneDelegate.m in Sources */,
+				4B1260B9237BDFBC00386D84 /* LXLevelChoiceCell.m in Sources */,
 				4BDC1726237541D9001C5767 /* LXFilterChoice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +500,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7QNHFLAU6U;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LXFilterChoiceTool/LXFilterPreHeader.pch;
 				INFOPLIST_FILE = LXFilterChoiceTool/Info.plist;
@@ -507,7 +508,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.starxin.LXFilterChoiceTool;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qizhidao.brand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -518,6 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7QNHFLAU6U;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LXFilterChoiceTool/LXFilterPreHeader.pch;
 				INFOPLIST_FILE = LXFilterChoiceTool/Info.plist;
@@ -525,7 +527,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.starxin.LXFilterChoiceTool;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qizhidao.brand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

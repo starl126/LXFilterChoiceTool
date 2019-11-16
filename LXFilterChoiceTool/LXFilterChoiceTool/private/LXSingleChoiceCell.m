@@ -51,7 +51,7 @@ static CGFloat kLXSingleCellChoosedImgHeight = 16.0f;
     if (self.needRefreshFrame) {
         [self p_updateFrame];
         self.needRefreshFrame = NO;
-        NSLog(@"111111111111");
+//        NSLog(@"111111111111");
     }
 }
 - (void)p_updateFrame {
