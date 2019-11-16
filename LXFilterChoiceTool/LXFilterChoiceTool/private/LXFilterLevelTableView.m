@@ -178,11 +178,15 @@ static CGFloat kLXLevelTableCellHeight = 50.0f;
 ///重置选项
 - (void)reset {
     [self p_resetDataSourceSelectCondition:self.choices];
-    [self removeAllChildTableView];
+    self.lastSelectedIndexPath = nil;
+    [LXFilterLevelTableView p_stackAnimationWithBlock:^{
+        CGFloat originX = self.wholeWidth - self.childTableView.frame.origin.x;
+        [self updateTableViewFrame:self.childTableView originX:originX];
+        self.frame = CGRectMake(self.marginLeftAndRight, self.frame.origin.y, self.wholeWidth, self.frame.size.height);
+    } completion:^{
+        [self removeAllChildTableView];
+    }];
     
-    [UIView animateWithDuration:0.4 animations:^{
-        [self updateParentTableViewFrameWithTotalCount:self.currentLevel+1];
-    } completion:nil];
     [self reloadData];
 }
 ///确认选项
@@ -271,6 +275,13 @@ static CGFloat kLXLevelTableCellHeight = 50.0f;
     
     return childTableView;
 }
+///刷新该控件所有的上级控件
+- (void)p_reloadDataInAllSuperTableView {
+    if (self.parentTableView) {
+        [self.parentTableView reloadData];
+        [self.parentTableView p_reloadDataInAllSuperTableView];
+    }
+}
 
 #pragma mark --- UITableViewDelegate,UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -291,20 +302,19 @@ static CGFloat kLXLevelTableCellHeight = 50.0f;
     [self p_resetDataSourceSelectCondition:choice.subChoices];
     choice.selected = !choice.isSelected;
     
-    //更新上一个选中cell的UI
+    //更新上一个选项状态
     if (_lastSelectedIndexPath) {
-        LXLevelChoiceCell* lastCell = [tableView cellForRowAtIndexPath:_lastSelectedIndexPath];
         self.choices[_lastSelectedIndexPath.row].selected = NO;
-        lastCell.choice = self.choices[_lastSelectedIndexPath.row];
     }
-    //更新当前选中cell的UI
-    LXLevelChoiceCell* currentCell = [tableView cellForRowAtIndexPath:indexPath];currentCell.selected = YES;
-    currentCell.choice = choice;
+    
     if (choice.isSelected) {
         _lastSelectedIndexPath = indexPath.copy;
     }else {
         _lastSelectedIndexPath = nil;
     }
+    [self reloadData];
+    
+    [self p_reloadDataInAllSuperTableView];
     
     if (choice.isSelected) {//被选中
         if (choice.subChoices && choice.subChoices.count) {

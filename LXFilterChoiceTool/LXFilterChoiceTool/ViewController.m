@@ -14,6 +14,7 @@
 @interface ViewController ()
 
 @property (nonatomic, strong) NSMutableArray<LXFilterChoice*>* allAddrs;
+@property (nonatomic, strong) LXFilterLevelTableView* tableView;
 
 @end
 
@@ -23,7 +24,11 @@
     [super viewDidLoad];
     self.navigationItem.title = @"主要";
     self.view.backgroundColor = UIColor.lightGrayColor;
-    
+    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc] initWithTitle:@"重置" style:UIBarButtonItemStylePlain target:self action:@selector(p_actionForClickReset)];
+    self.navigationItem.rightBarButtonItem = rightBar;
+}
+- (void)p_actionForClickReset {
+    [self.tableView reset];
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self p_setupLevelChoiceTableView];
@@ -37,20 +42,20 @@
     CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
     
     NSMutableArray* topArrM = [NSMutableArray array];
-    for (int i=0; i<30; i++) {
+    for (int i=0; i<15; i++) {
         LXFilterChoice* first = [LXFilterChoice new];
         first.content = [NSString stringWithFormat:@"一级选项--%d", i];
         first.choiceId = [NSString stringWithFormat:@"%d", i];
-        if (i == 13) {
+        if (i == 14) {
             first.selected = YES;
         }
         
         NSMutableArray* arrM = [NSMutableArray array];
-        for (int j=0; j<40; j++) {
+        for (int j=0; j<15; j++) {
             LXFilterChoice* second = [LXFilterChoice new];
             second.content = [NSString stringWithFormat:@"%d: 二级选项--%d", i, j];
             second.choiceId = [NSString stringWithFormat:@"%d", j];
-            if (j == 39) {
+            if (j == 14) {
                 second.selected = YES;
             }
             
@@ -62,18 +67,6 @@
                 if (k == 19) {
                     third.selected = YES;
                 }
-                
-                NSMutableArray* fourM = [NSMutableArray array];
-                for (int p=0; p<40; p++) {
-                    LXFilterChoice* four = [LXFilterChoice new];
-                    four.content = [NSString stringWithFormat:@"最后一级: %d", p];
-                    four.choiceId = [NSString stringWithFormat:@"%d", p];
-                    if (p==20) {
-                        four.selected = YES;
-                    }
-                    [fourM addObject:four];
-                }
-                third.subChoices = fourM.copy;
                 
                 [thirdM addObject:third];
             }
@@ -100,6 +93,8 @@
             printf("%s\n", one.content.UTF8String);
         }
     };
+    
+    self.tableView = tableView;
 }
 ///测试单级单选或者多选
 - (void)p_setupSingleChoiceTableView {
