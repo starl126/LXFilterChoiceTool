@@ -17,6 +17,8 @@
 		4B2781452373BE0E009055CA /* LXFilterChoiceToolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2781442373BE0E009055CA /* LXFilterChoiceToolTests.m */; };
 		4B2781502373BE0E009055CA /* LXFilterChoiceToolUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B27814F2373BE0E009055CA /* LXFilterChoiceToolUITests.m */; };
 		4B3CC1282379885100095251 /* LXSingleChoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CC1272379885100095251 /* LXSingleChoiceCell.m */; };
+		4B485B692382444E007EC0AC /* LXFlowCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B485B682382444E007EC0AC /* LXFlowCollectionView.m */; };
+		4BC0E47C2384D0CA006D7A61 /* Test1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC0E47B2384D0CA006D7A61 /* Test1.m */; };
 		4BDC1726237541D9001C5767 /* LXFilterChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC1725237541D9001C5767 /* LXFilterChoice.m */; };
 		4BDC17292375424D001C5767 /* LXFilterGroupChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC17282375424D001C5767 /* LXFilterGroupChoice.m */; };
 		4BDC172C23756AF6001C5767 /* LXFilterLevelTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC172B23756AF5001C5767 /* LXFilterLevelTableView.m */; };
@@ -64,6 +66,10 @@
 		4B3CC1262379885100095251 /* LXSingleChoiceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXSingleChoiceCell.h; sourceTree = "<group>"; };
 		4B3CC1272379885100095251 /* LXSingleChoiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXSingleChoiceCell.m; sourceTree = "<group>"; };
 		4B3CC12923798BE200095251 /* LXFilterPreHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXFilterPreHeader.pch; sourceTree = "<group>"; };
+		4B485B672382444E007EC0AC /* LXFlowCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXFlowCollectionView.h; sourceTree = "<group>"; };
+		4B485B682382444E007EC0AC /* LXFlowCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXFlowCollectionView.m; sourceTree = "<group>"; };
+		4BC0E47A2384D0CA006D7A61 /* Test1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test1.h; sourceTree = "<group>"; };
+		4BC0E47B2384D0CA006D7A61 /* Test1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test1.m; sourceTree = "<group>"; };
 		4BDC1724237541D9001C5767 /* LXFilterChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXFilterChoice.h; sourceTree = "<group>"; };
 		4BDC1725237541D9001C5767 /* LXFilterChoice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXFilterChoice.m; sourceTree = "<group>"; };
 		4BDC17272375424D001C5767 /* LXFilterGroupChoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXFilterGroupChoice.h; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 				4B27812F2373BE0B009055CA /* ViewController.m */,
 				4BF8DEBC237A4C3500922A01 /* LXTestV1.h */,
 				4BF8DEBD237A4C3500922A01 /* LXTestV1.m */,
+				4BC0E47A2384D0CA006D7A61 /* Test1.h */,
+				4BC0E47B2384D0CA006D7A61 /* Test1.m */,
 				4B3CC12923798BE200095251 /* LXFilterPreHeader.pch */,
 				4B2781312373BE0B009055CA /* Main.storyboard */,
 				4B2781342373BE0D009055CA /* Assets.xcassets */,
@@ -168,9 +176,10 @@
 			isa = PBXGroup;
 			children = (
 				4BDC1724237541D9001C5767 /* LXFilterChoice.h */,
-				4BDC1725237541D9001C5767 /* LXFilterChoice.m */,
 				4BDC17272375424D001C5767 /* LXFilterGroupChoice.h */,
-				4BDC17282375424D001C5767 /* LXFilterGroupChoice.m */,
+				4BDC172D23756CA2001C5767 /* LXFilterSingleTableView.h */,
+				4BDC172A23756AF5001C5767 /* LXFilterLevelTableView.h */,
+				4B485B672382444E007EC0AC /* LXFlowCollectionView.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -178,10 +187,11 @@
 		4BDC1723237540C9001C5767 /* private */ = {
 			isa = PBXGroup;
 			children = (
-				4BDC172D23756CA2001C5767 /* LXFilterSingleTableView.h */,
+				4BDC1725237541D9001C5767 /* LXFilterChoice.m */,
+				4BDC17282375424D001C5767 /* LXFilterGroupChoice.m */,
 				4BDC172E23756CA2001C5767 /* LXFilterSingleTableView.m */,
-				4BDC172A23756AF5001C5767 /* LXFilterLevelTableView.h */,
 				4BDC172B23756AF5001C5767 /* LXFilterLevelTableView.m */,
+				4B485B682382444E007EC0AC /* LXFlowCollectionView.m */,
 				4B3CC1262379885100095251 /* LXSingleChoiceCell.h */,
 				4B3CC1272379885100095251 /* LXSingleChoiceCell.m */,
 				4B1260B7237BDFBC00386D84 /* LXLevelChoiceCell.h */,
@@ -320,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B485B692382444E007EC0AC /* LXFlowCollectionView.m in Sources */,
 				4BDC172C23756AF6001C5767 /* LXFilterLevelTableView.m in Sources */,
 				4B2781302373BE0B009055CA /* ViewController.m in Sources */,
 				4BDC17292375424D001C5767 /* LXFilterGroupChoice.m in Sources */,
@@ -331,6 +342,7 @@
 				4B3CC1282379885100095251 /* LXSingleChoiceCell.m in Sources */,
 				4B1260B9237BDFBC00386D84 /* LXLevelChoiceCell.m in Sources */,
 				4BDC1726237541D9001C5767 /* LXFilterChoice.m in Sources */,
+				4BC0E47C2384D0CA006D7A61 /* Test1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

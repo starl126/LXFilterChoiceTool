@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "ViewController.h"
+#import "LXTestV1.h"
 
 @interface RootViewController ()
 
@@ -23,6 +24,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     ViewController* vc = [ViewController new];
     [self.navigationController pushViewController:vc animated:YES];
+//    LXTestV1* test = [LXTestV1 new];
+//    [self.view addSubview:test];
 }
 
 @end

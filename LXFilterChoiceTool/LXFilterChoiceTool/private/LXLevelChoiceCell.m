@@ -28,10 +28,21 @@
     }
     return self;
 }
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    if (newSuperview) {
+        
+    }
+}
+- (void)didMoveToSuperview {
+    
+}
 - (void)willMoveToWindow:(UIWindow *)newWindow {
     if (newWindow != NULL) {
         self.needRefreshFrame = YES;
     }
+}
+- (void)didMoveToWindow {
+    
 }
 - (void)setChoice:(LXFilterChoice *)choice {
     _choice = choice;

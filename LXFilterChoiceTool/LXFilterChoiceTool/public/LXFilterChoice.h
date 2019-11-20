@@ -31,11 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///选项依附于LXFilterGroupChoice对象的是否允许多选
 @property (nonatomic, assign, getter=isAllowMoreChoice) BOOL allowMoreChoice;
 ///该选项依附于LXFilterGroupChoice对象id
-@property (nonatomic, copy, readonly) NSString* groupId;
+@property (nonatomic, copy) NSString* groupId;
 ///该选项依附于LXFilterGroupChoice对象组标题
-@property (nonatomic, copy, nullable, readonly) NSString* groupTitle;
+@property (nonatomic, copy, nullable) NSString* groupTitle;
 ///该选项依附于LXFilterGroupChoice对象扩展属性
-@property (nonatomic, copy, nullable, readonly) id groupExt;
+@property (nonatomic, copy, nullable) id groupExt;
 
 #pragma mark --- 下级选项数组
 @property (nonatomic, strong, nullable) NSArray <LXFilterChoice *>* subChoices;

@@ -10,11 +10,15 @@
 #import "LXFilterSingleTableView.h"
 #import "LXFilterLevelTableView.h"
 #import "LXFilterChoice.h"
+#import "LXFilterGroupChoice.h"
+#import "LXFlowCollectionView.h"
+#import "Test1.h"
 
 @interface ViewController ()
 
 @property (nonatomic, strong) NSMutableArray<LXFilterChoice*>* allAddrs;
 @property (nonatomic, strong) LXFilterLevelTableView* tableView;
+@property (nonatomic, strong) LXFlowCollectionView* flowCollectionView;
 
 @end
 
@@ -28,14 +32,111 @@
     self.navigationItem.rightBarButtonItem = rightBar;
 }
 - (void)p_actionForClickReset {
-    [self.tableView reset];
+//    [self.tableView reset];
+    NSInteger index = 0;
+    if (0 == index) {
+        [self.flowCollectionView reset];
+    }else if (1 == index) {
+        [self.flowCollectionView rebackLastSelectedState];
+    }else {
+        [self.flowCollectionView confirm];
+    }
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self p_setupLevelChoiceTableView];
+ 
+//    [self p_testArrayValueSetPerformance];
+    
+    
+    [self p_setupFlowChoiceCollectionView];
+//    [self p_setupLevelChoiceTableView];
+    
 //    CGRect frame = self.view.frame;
 //    [UIView animateWithDuration:1.0 animations:^{
 //        self.view.frame = CGRectMake(0, 100, frame.size.width-160, frame.size.height-200);
 //    }];
+}
+///测试性能
+- (void)p_testArrayValueSetPerformance {
+    NSArray<Test1*>* arr1 = [self p_setupTest];
+    NSArray<Test1*>* arr2 = [self p_setupTest];
+    
+    CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
+    [arr1 makeObjectsPerformSelector:@selector(setContent:) withObject:@"222"];
+    [arr1 makeObjectsPerformSelector:@selector(setContent:) withObject:@"111"];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent();
+    printf("makeObjects---%lf", end-start);
+    
+    start = CFAbsoluteTimeGetCurrent();
+    [arr1 setValue:@"222" forKey:@"content"];
+    [arr2 setValue:@"111" forKey:@"content"];
+    end = CFAbsoluteTimeGetCurrent();
+    printf("setValue---%lf", end-start);
+    
+    start = CFAbsoluteTimeGetCurrent();
+    [arr1 enumerateObjectsUsingBlock:^(Test1 * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.content = @"222";
+    }];
+    [arr2 enumerateObjectsUsingBlock:^(Test1 * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.content = @"111";
+    }];
+    end = CFAbsoluteTimeGetCurrent();
+    printf("enumerate---%lf", end-start);
+}
+///测试
+- (NSArray*)p_setupTest {
+    CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
+    
+    NSMutableArray* arrM = [NSMutableArray array];
+    for (int i=0; i<10000; i++) {
+        Test1* t1 = [Test1 new];
+        t1.selected = NO;
+        t1.content = [NSString stringWithFormat:@"content:%d", i];
+        [arrM addObject:t1];
+    }
+    
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent();
+    printf("\n创建数组：%lf\n", end-start);
+    return arrM.copy;
+}
+///测试流水多选
+- (void)p_setupFlowChoiceCollectionView {
+    
+    NSMutableArray* groupArrM = [NSMutableArray array];
+    
+    for (int i=0; i<5; i++) {
+        LXFilterGroupChoice* group = [LXFilterGroupChoice new];
+        group.groupTitle = [NSString stringWithFormat:@"group:%d", i];
+        group.groupId = [NSString stringWithFormat:@"%d", i];
+        group.allowMoreChoice = YES;
+//        group.mustHaveChoice = NO;
+        
+        NSMutableArray* choiceArrM = [NSMutableArray array];
+        for (int j=0; j<8; j++) {
+            LXFilterChoice* choice = [LXFilterChoice new];
+            choice.content = [NSString stringWithFormat:@"content:%d-%d",i,j];
+            choice.choiceId = [NSString stringWithFormat:@"%d", j];
+            if (0 == j) {
+                choice.allShortCut = YES;
+                choice.selected = YES;
+            }
+            [choiceArrM addObject:choice];
+        }
+        group.groupChoices = choiceArrM.copy;
+        
+        [groupArrM addObject:group];
+    }
+    
+    LXFlowCollectionView* flowCollection = [[LXFlowCollectionView alloc] initWithFrame:self.view.bounds
+                                                                          groupChoices:groupArrM.copy];
+    [self.view addSubview:flowCollection];
+    flowCollection.selectedGroupChoicesBlock = ^(NSArray<NSArray<LXFilterChoice *> *> * _Nullable selectedGroupArr) {
+        for (NSArray* arr in selectedGroupArr) {
+            for (LXFilterChoice* one in arr) {
+                printf("数组：%tu, 选中----%s\n",arr.count,one.content.UTF8String);
+            }
+        }
+    };
+    self.flowCollectionView = flowCollection;
 }
 ///测试多级单选
 - (void)p_setupLevelChoiceTableView {
