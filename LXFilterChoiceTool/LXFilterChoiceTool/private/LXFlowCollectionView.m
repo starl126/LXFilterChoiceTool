@@ -135,9 +135,6 @@
 
 @interface LXFlowCollectionView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
-///流水布局的列数，默认是3
-@property (nonatomic, assign) NSUInteger columns;
-
 ///flow layout
 @property (nonatomic, weak) UICollectionViewFlowLayout* layout;
 
@@ -160,11 +157,10 @@
 #pragma mark --- life cycle
 - (instancetype)initWithFrame:(CGRect)frame groupChoices:(NSArray<LXFilterGroupChoice*>*)groupChoices {
     
-    _columns = 3;
     UICollectionViewFlowLayout* layout = [UICollectionViewFlowLayout new];
     
     if (self = [super initWithFrame:frame collectionViewLayout:layout]) {
-        self.columns = 3;
+        _columns = 3;
         self.layout = layout;
         self.groupChoices = groupChoices.copy;
         self.lastSelectedChoices = [NSMutableArray array];
@@ -183,6 +179,10 @@
         [self registerClass:LXFlowChoiceCell.class forCellWithReuseIdentifier:NSStringFromClass(LXFlowChoiceCell.class)];
         [self registerClass:LXFlowCollectionReusableView.class forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(LXFlowCollectionReusableView.class)];
     }
+}
+- (void)setColumns:(NSUInteger)columns {
+    _columns = columns;
+    [self p_updateFlowLayout];
 }
 ///更新 flow layout的布局
 - (void)p_updateFlowLayout {

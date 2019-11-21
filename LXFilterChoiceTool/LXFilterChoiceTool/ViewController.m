@@ -44,10 +44,9 @@
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
  
-//    [self p_testArrayValueSetPerformance];
-    
-    
     [self p_setupFlowChoiceCollectionView];
+    
+//    [self p_testArrayValueSetPerformance];
 //    [self p_setupLevelChoiceTableView];
     
 //    CGRect frame = self.view.frame;
@@ -55,7 +54,7 @@
 //        self.view.frame = CGRectMake(0, 100, frame.size.width-160, frame.size.height-200);
 //    }];
 }
-///测试性能
+///测试性能help
 - (void)p_testArrayValueSetPerformance {
     NSArray<Test1*>* arr1 = [self p_setupTest];
     NSArray<Test1*>* arr2 = [self p_setupTest];
@@ -126,7 +125,8 @@
         [groupArrM addObject:group];
     }
     
-    LXFlowCollectionView* flowCollection = [[LXFlowCollectionView alloc] initWithFrame:self.view.bounds
+    CGRect frame = CGRectMake(0, 0, self.view.bounds.size.width, 300);
+    LXFlowCollectionView* flowCollection = [[LXFlowCollectionView alloc] initWithFrame:frame
                                                                           groupChoices:groupArrM.copy];
     [self.view addSubview:flowCollection];
     flowCollection.selectedGroupChoicesBlock = ^(NSArray<NSArray<LXFilterChoice *> *> * _Nullable selectedGroupArr) {
@@ -137,6 +137,7 @@
         }
     };
     self.flowCollectionView = flowCollection;
+    flowCollection.columns = 4;
 }
 ///测试多级单选
 - (void)p_setupLevelChoiceTableView {

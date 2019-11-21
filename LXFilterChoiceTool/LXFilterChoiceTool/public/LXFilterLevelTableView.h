@@ -48,6 +48,9 @@ typedef void (^LXLevelChoosedChoicesCallback)(NSArray<LXFilterChoice*>* selected
 ///当前控件的上级选项控件
 @property (nonatomic, weak) LXFilterLevelTableView* parentTableView;
 
+///用于table view的背景颜色,
+@property (nonatomic, strong) NSArray* backColorArr;
+
 #pragma mark --- public
 
 ///实时获取多级联动选中的选项数组

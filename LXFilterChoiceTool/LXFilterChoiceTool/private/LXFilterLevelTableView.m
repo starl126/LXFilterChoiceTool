@@ -19,8 +19,6 @@ static CGFloat kLXLevelTableCellHeight = 50.0f;
 @property (nonatomic, strong) NSMutableArray<LXFilterChoice*>* selectedChoices;
 ///用于默认初始化滚动，仅在第一次加载时使用,selectedIdxForScroll=-1代表不进行初始化滚动
 @property (nonatomic, assign) NSInteger selectedIdxForScroll;
-///用于table view的背景颜色
-@property (nonatomic, strong) NSArray* backColorArr;
 
 ///上一次选中的选项
 @property (nonatomic, strong) NSIndexPath* lastSelectedIndexPath;

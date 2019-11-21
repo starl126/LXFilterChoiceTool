@@ -29,6 +29,8 @@ typedef void (^LXFlowCollectionChoosedChoicesCallback)(NSArray<NSArray<LXFilterC
 ///实时回调，请在一致性要求较严格情况下调用，其他情况下请使用'currentChoosedChoices'
 @property (nonatomic, copy) LXFlowCollectionChoosedChoicesCallback selectedGroupChoicesBlock;
 
+///流水布局的列数，默认是3
+@property (nonatomic, assign) NSUInteger columns;
 
 ///确认选项操作，所有选中项经过确认后才会记录用户行为
 - (void)confirm;
